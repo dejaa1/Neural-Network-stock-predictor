@@ -38,18 +38,14 @@ def pre_process(file_path: str) -> dict:
     stock_dict = dict()
 
     for stock in stocks:
-        # >>> YOUR CODE HERE
+        
         df1 = (df[df['Stock'] == stock])
-        #
-        # section = df1.loc[:, ['Date']]
-        #
-        #
-        # df1['Date'] = pd.to_datetime(section)
+        
         df1 =  df1.sort_values(by='Date', inplace=False)
         print(df1)
         stock_dict[stock] = df1
 
-        # <<< END YOUR CODE
+        
 
     return stock_dict
 
@@ -155,58 +151,35 @@ def train(data: tuple, max_epochs: int = 200, seed=12345) -> tuple:
     print('---------- Training has started: -------------')
     optimizer = torch.optim.Adam(net.parameters(), lr=learning_rate)
 
-    # DEFINE YOUR OPTIMIZER
+    
 
 
 
-    for epoch in iterator:  # DO NOT CHANGE THIS LINE
+    for epoch in iterator: 
 
 
         y_pred = net(x_train)
-       ## print(y_pred.shape)
-        # y_train = y_train.type(torch.LongTensor)
-
-       ## print(y_train)
+    
 
         loss = my_NLLloss(y_pred, y_train)
-        #maybe you need to do net.zero_grad()
+        
 
-        ##loss.requires_grad_()
+        
 
-       ## print("THIS IS LOSS:")
-       ## print(loss)
+    
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
-        #
+        
         train_loss = loss
 
-        # for x_, y_ in zip(x_val, y_val):
-        #     x = torch.from_numpy(x_).to(device=device)
-        #     y = torch.from_numpy(np.asarray(y_)).to(device=device)
-        #     print(x.shape)
-        #     scores = net(x)
-        #     loss = loss_func(scores, y)
-        #     optimizer.zero_grad()
-        #
-        #     loss.backward()
-        #     optimizer.step()
-
-        #
+       
         y_pred = net(x_val)
         loss = my_NLLloss(y_pred, y_val)
 
-       ## loss.requires_grad_()
-        # optimizer.zero_grad()
-        #
-        # loss.backward()
-        # optimizer.step()
         val_loss = loss
 
 
-        # <<< END YOUR CODE
-
-        # DO NOT MODIFY THE BELOW
         train_losses.append(train_loss.item())
         val_losses.append(val_loss.item())
         if tqdm is not None:
@@ -217,7 +190,7 @@ def train(data: tuple, max_epochs: int = 200, seed=12345) -> tuple:
             print(
                 f'epoch {epoch + 1}: train_loss = {train_loss}, val_loss = {val_loss}')
 
-    print('---------- Training ended. -------------\n')
+ 
 
     plt.figure()
     epochs = list(range(max_epochs))
@@ -234,20 +207,7 @@ def train(data: tuple, max_epochs: int = 200, seed=12345) -> tuple:
 
 
 def plot_predictions(model: nn.Module, stock_dict: dict) -> None:
-    """
-    Given a trained model and a dictionary of stock dataframes, predict the
-    stock 'Close' prices for each stock. Plot the predicted 'Close' prices vs.
-    the actual 'Close' prices for each stock (only plot the first 50 data samples).
-
-    Check the handout for an example.
-
-    Args:
-        model (nn.Module): a trained model
-        stock_dict (dict): a dictionary of stock dataframes
-
-    Returns:
-        None
-    """
+    
 
     fig, axs = plt.subplots(2, 2)  # axs may be useful
     fig.tight_layout(pad=3.0)  # give some space between subplots
